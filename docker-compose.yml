@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  employee_server:
+    container_name: employee_server
+    build: 
+      context: server
+      dockerfile: Dockerfile
+    depends_on:
+      - employee_mongo
+    ports:
+      - 8080:8080
+    stdin_open: true
+    tty: true
+    restart: on-failure
+    volumes:
+      - ./server/src:/code/src
+    environment:
+      - PORT=8080
+      - MONGODB_LOCAL_URL=mongodb://employee_mongo:27017/employeeManagementSystem
+
+  employee_mongo:
+    container_name: employee_mongo
+    image: mongo
+    ports:
+      - 27017:27017
