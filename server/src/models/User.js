@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
-// let { defaultUserImagePath } = require("../secret");
-// defaultUserImagePath = defaultUserImagePath + "/defaultImage.png";
+import { defaultImage } from '../secret.js';
 
 const validateEmail = function (email) {
   let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -36,8 +35,7 @@ const UserSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      // required: [true, "Please provide a image"],
-      default: defaultUserImagePath,
+      default: defaultImage,
     },
   },
   {
@@ -47,4 +45,4 @@ const UserSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", UserSchema);
 
-export {User};
+export { User };

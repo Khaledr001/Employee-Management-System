@@ -1,16 +1,11 @@
 import mongoose from "mongoose";
 import { educationSchema } from "./Education.js";
+import { defaultImage } from '../secret.js';
 
 const validateEmail = function (email) {
     let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email);
 };
-
-const educationSchema = new mongoose.Schema({
-    degree: String,
-    university: String,
-    graduationYear: Number
-});
 
 const EmployeeSchema = new mongoose.Schema({
     firstName: {
@@ -26,6 +21,11 @@ const EmployeeSchema = new mongoose.Schema({
         trim: true,
         minlength: [3, "Minimun length of last name should be 3 characters"],
         maxlength: [30, "Maximun length of last name should be 50 characters"],
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: [6, "Please enter minumum 6 length password"],
     },
     age: {
         type: Number,
@@ -52,15 +52,16 @@ const EmployeeSchema = new mongoose.Schema({
     },
     address: {
         type: String,
+        trim: true,
         required: [true, "Please provide employee address"],
     },
     image: {
         type: String,
-        // required: [true, "Please provide a image"],
-        // default: defaultUserImagePath,
+        default: defaultImage,
     },
     department: {
         type: String,
+        trim: true,
         required: [true, "Please provide employee department"],
     },
     joiningDate: {
@@ -69,10 +70,12 @@ const EmployeeSchema = new mongoose.Schema({
     },
     salary: {
         type: Number,
+        trim: true,
         required: [true, "Please provide employee salary"],
     },
     skills: [{
-        type: String
+        type: String,
+        trim: true
     }],
     education: [educationSchema],
 },
