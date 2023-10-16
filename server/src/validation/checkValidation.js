@@ -12,10 +12,10 @@ const runValidation = async (req, res, next) => {
                 message: errors.array(),
             });
         }
-        return next();
+        else return next();
     } catch (error) {
         createError(500, "Something went wrong");
     }
-};
+}; 
 
 export { runValidation };

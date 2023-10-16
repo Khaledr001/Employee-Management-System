@@ -12,7 +12,7 @@ const userRegester = async (req, res, next) => {
         // const userExists = await User.exists(email);
         const userExists = await User.findOne({ email: email });
         if (userExists) {
-            throw createError(409, "User already exists");
+            return res.status(409).json({ message: `User already exists with this email ${email}` });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -110,35 +110,6 @@ const getAUser = async (req, res, next) => {
     }
 };
 
-// Get a user by Email or Name
-const getAUserByEmailOrName = async (req, res, next) => {
-    try {
-        // const userEmail = req?.query?.email;
-        const { name } = req?.body;
-        const userObj = await findUserbyEmailOrName({ name });
-        
-        if (!userObj) {
-            errorResponse(res, {
-                statusCode: 404,
-                message: `User doesn't found with ${name}`,
-            });
-        } else {
-            let user = userObj.toJSON();
-            delete user.password;
-            successResponse(res, {
-                statusCode: 200,
-                message: "User found",
-                payload: { user },
-            });
-        }
-    } catch (error) {
-        errorResponse(res, {
-            statusCode: 500,
-            message: "Something went wrong",
-        });
-    }
-};
-
 // Update a user Information using userId
 const updateUser = async (req, res, next) => {
     try {
@@ -206,7 +177,6 @@ const deleteUser = async (req, res, next) => {
 export {
     deleteUser,
     getAUser,
-    getAUserByEmailOrName,
     getAllUser,
     updateUser,
     userRegester

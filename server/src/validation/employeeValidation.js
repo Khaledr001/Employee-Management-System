@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+import { body } from "express-validator";
 
 const validateEmployeeRegistration = [
     body("firstName")
@@ -58,14 +58,21 @@ const validateEmployeeRegistration = [
     body("salary")
         .trim()
         .notEmpty()
-        .withMessage("Employee Department is required")
+        .withMessage("Employee salary is required")
         .isInt({ min: 0 })
-        .withMessage("Employee salary must be a positive number")
+        .withMessage("Employee salary must be a positive number"),
+        
+    body("age")
+        .trim()
+        .notEmpty()
+        .withMessage("Employee age is required")
+        .isInt({ min: 0 })
+        .withMessage("Employee age must be a positive number"),
 
     body('skills')
         .isArray()
         .withMessage('Skills must be an array'),
 
 ];
-
-module.exports = { validateEmployeeRegistration };
+ 
+export { validateEmployeeRegistration };

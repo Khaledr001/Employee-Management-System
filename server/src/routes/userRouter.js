@@ -2,7 +2,6 @@ import express from "express";
 import {
     deleteUser,
     getAUser,
-    getAUserByEmailOrName,
     getAllUser,
     updateUser,
     userRegester
@@ -29,8 +28,6 @@ userRouter.post(
 );
 
 userRouter.get("/allusers",  getAllUser);
-
-userRouter.post("/",  getAUserByEmailOrName);
 
 userRouter.get("/:id",  getAUser);
 
