@@ -3,6 +3,9 @@ import NavBar from "./components/navBar";
 import SideBar from "./components/sideBar";
 
 const Admin = () => {
+
+  
+
   return (
     <div className="">
       <NavBar />

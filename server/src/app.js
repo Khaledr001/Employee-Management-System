@@ -4,6 +4,7 @@ import express from "express";
 import morgan from "morgan";
 import { employeeRouter } from "./routes/employeeRouter.js";
 import { userRouter } from "./routes/userRouter.js";
+import { authRouter } from "./routes/authRouter.js";
 
 const app = express();
 
@@ -16,6 +17,6 @@ app.use("/public", express.static('public'));
 
 app.use("/api/employee", employeeRouter);
 app.use("/api/users", userRouter);
-
+app.use('/api/auth', authRouter)
 
 export default app;
