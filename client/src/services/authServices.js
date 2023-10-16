@@ -26,7 +26,7 @@ const LogIn = (data) => {
         }
         window.location.reload();
     } catch (error) {
-        alert("Login failed!!");
+        // alert("Login failed!!");
     }
 };
 

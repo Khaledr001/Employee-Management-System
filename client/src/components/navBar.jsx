@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import { PiWarningCircleBold } from "react-icons/pi";
+import { useAuth } from "../hooks/useAuth";
 
 function Navbar() { 
   const handleToggle = (e) => {
@@ -33,7 +34,9 @@ function Navbar() {
     }
   }
 
-  const handleEmployeeSearch = () => {}
+  const handleEmployeeSearch = () => { }
+  
+  const { isLogin, onLogout } = useAuth();
 
   return (
     <div className="fixed shadow-lg z-10 top-0 right-0 left-0 ">
@@ -96,34 +99,9 @@ function Navbar() {
         </div>
 
         <div className="navbar-end w-auto flex gap-4">
-          {/* <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle">
-              <div className="indicator w-8">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                  />
-                </svg>
-                <span className="badge badge-xs badge-primary indicator-item"></span>
-              </div>
-            </label>
-            <div
-              tabIndex={0}
-              className="mt-3 z-[1] card card-compact dropdown-content w-96 bg-base-100 shadow">
-              <div className="card-body">
-                <div>Notification 1</div>
-              </div>
-            </div>
-          </div> */}
-          <div className="dropdown dropdown-end">
+
+          {isLogin() ? (
+            <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-8 rounded-full">
                 {/* <img src="" /> */}
@@ -175,9 +153,16 @@ function Navbar() {
                 </label>
               </li>
             </ul>
-          </div>
+            </div>
+          ) :
+          (
+            <Link to='/login' className="btn btn-warning btn-outline btn-sm h-9"> Login </Link>  
+          )
+          }
+          
         </div>
       </div>
+
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <div className="flex flex-col justify-center items-center">

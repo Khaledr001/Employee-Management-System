@@ -26,7 +26,7 @@ const handleLogin = async (req, res, next) => {
         if (!isPasswordMatch) {
             return errorResponse(res, {
                 statusCode: 401,
-                message: "User password does not match",
+                message: "Password does not match",
             });
         }
 

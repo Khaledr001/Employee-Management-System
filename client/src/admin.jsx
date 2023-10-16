@@ -1,15 +1,18 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./components/navBar";
 import SideBar from "./components/sideBar";
+import { useAuth } from "./hooks/useAuth";
 
 const Admin = () => {
-
+  const { isLogin } = useAuth();
   
 
   return (
     <div className="">
       <NavBar />
-      <div className="flex h-full min-h-[94vh]">
+      {
+        isLogin() ? (
+          <div className="flex h-full min-h-[94vh]">
         {/* sideBar Component */}
         <div>
           <SideBar />
@@ -18,6 +21,9 @@ const Admin = () => {
           <Outlet />
         </div>
       </div>
+        ) : null
+      }
+      
     </div>
   );
 };

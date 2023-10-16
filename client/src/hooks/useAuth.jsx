@@ -12,11 +12,11 @@ export const useAuth = () => {
 }
 
 const logIn = (userData) => { 
-    return Axios({
-        method: 'POST',
-        url: '/auth/login',
-        data: userData
-    }, { withCredentials: true });
+    return (Axios.post('/auth/login', userData)
+      .catch(function (error) {
+        //   console.log(error.response.data.message);
+          return Promise.reject(error.response);
+  }))
 }
 
 const register = (userData) => { 

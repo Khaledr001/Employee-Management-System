@@ -1,16 +1,16 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import authServices from "../../services/authServices";
-import authSchema from "../../schemas";
 import Loading from "../../components/loading";
 import { useUserLogin } from "../../hooks/useAuth";
+import authSchema from "../../schemas";
+import authServices from "../../services/authServices";
 import ErrorPage from "../errorPage";
 
 function Login() {
   const navigate = useNavigate();
 
-  const { mutate, isLoading, isSuccess, data, error } = useUserLogin(); 
+  const { mutate, isSuccess, isLoading, isError, data, error } = useUserLogin(); 
 
   const {
     values,
@@ -27,20 +27,24 @@ function Login() {
     },
     validationSchema: authSchema.loginSchema,
     onSubmit: async (values) => {
-        mutate(values);
+      mutate(values);
+      // console.log(data?.data);
     },
   });
 
+  if (isLoading) return <Loading />;
+  
+  if (isError) { 
+    // console.log(error)
+    if(error.status != 404 && error.status != 401) return <ErrorPage />;
+  }
+  
   if (isSuccess) {
     const response = data?.data;
     authServices.LogIn(response);
-
+    // console.log(data);
     navigate("/", { replace: true });
   }
-
-  if(error) return <ErrorPage />
-  
-  if (isLoading) return <Loading />;
 
   return (
     <>
@@ -88,6 +92,12 @@ function Login() {
                 </p>
               ) : null}
             </div>
+
+            {error?.data.message && 
+              <div className="w-[82%] m-auto">
+                <p className="text-error text-base ms-2 mt-1">{error.data.message}</p>
+              </div>                
+              }
 
             <div className="m-auto mt-6 w-[82%] ">
               <button
