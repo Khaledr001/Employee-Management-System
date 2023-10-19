@@ -5,6 +5,7 @@ import { LiaLuggageCartSolid } from "react-icons/lia";
 import { MdKeyboardArrowRight, MdKeyboardArrowDown } from "react-icons/md";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const SideBar = () => {
   const [parrow, setParrow] = useState(false);
@@ -12,6 +13,8 @@ const SideBar = () => {
 
   const [uarrow, setUarrow] = useState(false);
   const [ulist, setUlist] = useState(true);
+
+  const {isLogin} = useAuth();
 
   const handleEmployee = () => {
     setParrow(!parrow);
@@ -24,8 +27,9 @@ const SideBar = () => {
   };
 
   return (
+    // {isLogi()}
     <>
-      <div id="sidebar" className="  w-[290px] bg-base-200 h-full pt-5 px-3">
+      <div id="sidebar" className="hidden w-[290px] bg-base-200 h-full pt-5 px-3">
         <div className="grid gap-4">
           <div className="flex justify-start items-center gap-2 text-lg btn">
             <HiOutlineViewGrid className="text-2xl" />
@@ -93,7 +97,7 @@ const SideBar = () => {
               <div className="grid ps-9 pt-1">
                 <ul className="">
                   <Link
-                    to={"/admin/all-employees"}
+                    to={"/all-employees"}
                     className="btn btn-sm w-full flex justify-start">
                     {" "}
                     <span>All Employees</span>

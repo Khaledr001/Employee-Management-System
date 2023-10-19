@@ -3,6 +3,7 @@ import App from '../App'
 import Login from '../pages/authentication/login'
 import Register from '../pages/authentication/register'
 import ErrorPage from '../pages/errorPage'
+import AllEmployees from '../pages/employee/allEmployees'
 
 
 const AppRouts = () => {
@@ -12,8 +13,11 @@ const AppRouts = () => {
         element: <App />,
         errorPage: <ErrorPage />,
         children: [
-            
-        ],
+        {
+          path: "all-employees",
+          element: <AllEmployees />,
+        },
+      ],
       },
       {
         path: '/login',

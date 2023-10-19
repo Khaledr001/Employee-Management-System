@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-// import Catagory from "./catagory";
 import { Link } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import { PiWarningCircleBold } from "react-icons/pi";
 import { useAuth } from "../hooks/useAuth";
+import userServices from "../services/userServices";
+import { backendUrl } from "../../secrete";
 
 function Navbar() { 
   const handleToggle = (e) => {
@@ -17,8 +18,16 @@ function Navbar() {
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "mylight"
   );
   const [sideBar, setSideBar] = useState(false);
+  const [userImage, setUserImage] = useState();
 
   useEffect(() => {
+    let user = localStorage.getItem("user");
+    user = JSON.parse(user);
+    if (user) { 
+      // console.log(user);
+      const img = `${backendUrl}${user.image}`;
+      setUserImage(img);
+    }
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");
     document.querySelector("html").setAttribute("data-theme", localTheme);
@@ -48,30 +57,31 @@ function Navbar() {
             EMS
           </Link>
 
-          <label className="btn btn-sm btn-circle hover:bg-purple-400 swap swap-rotate">
-            {/* this hidden checkbox controls the state */}
-            <input onClick={handleSidebar} className="hidden" type="checkbox" />
+          {isLogin() ? (
+            <label className="btn btn-sm btn-circle hover:bg-purple-400 swap swap-rotate">
+              {/* this hidden checkbox controls the state */}
+              <input onClick={handleSidebar} className="hidden" type="checkbox" />
 
-            {/* hamburger icon */}
-            <svg
-              className="swap-off fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              viewBox="0 0 512 512">
-              <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
-            </svg>
+              {/* hamburger icon */}
+              <svg
+                className="swap-off fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                viewBox="0 0 512 512">
+                <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+              </svg>
 
-            {/* close icon */}
-            <svg
-              className="swap-on fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              viewBox="0 0 512 512">
-              <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
-            </svg>
-          </label>
+              {/* close icon */}
+              <svg
+                className="swap-on fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                viewBox="0 0 512 512">
+                <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+              </svg>
+            </label>) : null}
         </div>
         <div className="navbar-center">
           <div className="h-10 relative me-3 md:me-10 lg:me-16">
@@ -102,10 +112,11 @@ function Navbar() {
 
           {isLogin() ? (
             <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-8 rounded-full">
-                {/* <img src="" /> */}
-                <AiOutlineUser className="w-full h-full" />
+            <label tabIndex={0} className="btn p-0 btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                  {/* <img src="" /> */}
+                  {userImage ? ( <img className="" src={userImage} /> ) : <AiOutlineUser className="w-full h-full" />}
+                
               </div>
             </label>
             <ul
@@ -172,7 +183,7 @@ function Navbar() {
             </p>
           </div>
           <div className="modal-action ">
-            <button className="btn btn-error me-3">yes i'm sure</button>
+            <button onClick={onLogout} className="btn btn-error me-3">yes i'm sure</button>
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button className="btn ">Close</button>

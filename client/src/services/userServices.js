@@ -31,30 +31,6 @@ const updateUser = async (updatedData, id) => {
   }
 };
 
-const getAddress = async () => {
-  try {
-    const response = await Axios(
-      {
-        method: "get",
-        url: "/user/address/all",
-        headers: {
-          accessToken: accessToken,
-        },
-      },
-      {
-        withCredentials: true,
-      }
-    );
-
-    const data = response.data;
-    const { addresses } = data.payload;
-    console.log(addresses);
-    return addresses;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const userServices = { updateUser, getAddress };
+const userServices = { updateUser };
 
 export default userServices;

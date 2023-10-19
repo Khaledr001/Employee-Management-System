@@ -17,7 +17,7 @@ const handleLogin = async (req, res, next) => {
             return errorResponse(res, {
                 statusCode: 404,
                 message:
-                    `User does not exist with this ${email} email address. Please register fist`,
+                    `User does not exist with this email address. Please register fist`,
             });
         }
 
