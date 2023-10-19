@@ -50,7 +50,7 @@ export default {
           "base-100": "#f4f5fa",
           "info": "#2488e5",
           "success": "#1e8071",
-          "warning": "#d28d04",
+          "warning": "#f0a433",
           "error": "#ec4b4e",
 
         },

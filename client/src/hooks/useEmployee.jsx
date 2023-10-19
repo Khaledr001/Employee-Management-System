@@ -8,6 +8,15 @@ const getAllEmployee = () => {
   });
 };
 
+const getAEmployeeById = (id) => {
+  // console.log(id);
+  
+  return Axios({
+    method: "GET",
+    url: `/employee/${id}`,
+  });
+};
+
 const addProduct = (product) => {
   return Axios(
     {
@@ -44,13 +53,13 @@ const getAProduct = (id) => {
   return Axios(
     {
       method: "GET",
-      url: `/product/${id}`,
+      url: `/product/${id.id}`,
     },
     { withCredentials: true }
   );
 };
 
-const useAddProduct = () => {
+export const useAddProduct = () => {
   return useMutation(addProduct);
 };
 
@@ -58,15 +67,20 @@ export const useGetAllEmployee = () => {
   return useQuery("getAllEmployee", getAllEmployee);
 };
 
-const useUpdateProduct = () => {
+export const useGetAEmployeeById = (id) => {
+  // console.log(id);
+  return useQuery("getAEmployeeById", () => getAEmployeeById(id));
+}
+
+export const useUpdateProduct = () => {
   return useMutation(updateProduct);
 };
 
-const useDeleteProduct = () => {
+export const useDeleteProduct = () => {
   return useMutation(deleteProduct);
 };
 
-const useGetAProduct = () => {
+export const useGetAProduct = () => {
   return useQuery('getAProduct', getAProduct);
 }
 

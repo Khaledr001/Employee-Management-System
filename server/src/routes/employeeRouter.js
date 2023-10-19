@@ -1,6 +1,6 @@
 import express from 'express';
 import { upload } from '../middlewares/imageUpload.js';
-import { addEmployee, deleteEmployee, getAllEmployee, updateEmployee } from '../controllers/employeeController.js';
+import { addEmployee, deleteEmployee, getAEmployee, getAllEmployee, updateEmployee } from '../controllers/employeeController.js';
 import { validateEmployeeRegistration } from '../validation/employeeValidation.js';
 import { runValidation } from '../validation/checkValidation.js';
 import { isLoggedIn } from '../middlewares/auth.js';
@@ -14,6 +14,8 @@ employeeRouter.get('/test', (req, res) => {
 employeeRouter.post('/add', upload.single("image"), validateEmployeeRegistration, runValidation, addEmployee);
 
 employeeRouter.get('/all', getAllEmployee);
+
+employeeRouter.get('/:id', getAEmployee);
 
 employeeRouter.put('/update/:id', updateEmployee)
 

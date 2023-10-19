@@ -5,7 +5,7 @@ import { errorResponse, successResponse } from './responseController.js';
 
 const addEmployee = async (req, res) => { 
     try { 
-        const { firstName, lastName, email, password, phoneNumber, age, position, address, department, salary, skills, education } = req?.body;
+        const { firstName, lastName, email, password, phoneNumber, dateOfBirth, position, address, department, salary, skills, education } = req?.body;
         // const userExists = await User.exists(email);
         const userExists = await Employee.findOne({ email: email });
         if (userExists) {
@@ -23,7 +23,7 @@ const addEmployee = async (req, res) => {
         const employeeObj = {
             firstName,
             lastName,
-            age: Number(age),
+            dateOfBirth,
             position,
             address,
             department,
@@ -96,6 +96,32 @@ const getAllEmployee = async (req, res) => {
     }
 }
 
+const getAEmployee = async (req, res) => {
+    try {
+        const id = req?.params.id;
+        console.log(id);
+        const employee = await Employee.findById(id);
+        if (!employee) { 
+            return errorResponse(res, { 
+                statusCode: 404,
+                message: 'Employee not found'
+            });
+        }
+        console.log(employee);
+        successResponse(res, {
+            statusCode: 200,
+            message: 'Employee found',
+            payload: {employee}
+        });
+    }
+    catch (error) {
+        errorResponse(res, {
+            statusCode: 500,
+            message: "Something went wrong"
+        });
+    }
+}
+
 const updateEmployee = async (req, res, next) => {
     try {
         const imageName = req?.file?.filename;
@@ -154,4 +180,4 @@ const deleteEmployee = async (req, res, next) => {
     }
 };
 
-export { addEmployee, deleteEmployee, getAllEmployee, updateEmployee };
+export { addEmployee, deleteEmployee, getAllEmployee, updateEmployee, getAEmployee };

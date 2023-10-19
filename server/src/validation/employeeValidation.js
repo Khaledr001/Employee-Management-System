@@ -62,12 +62,12 @@ const validateEmployeeRegistration = [
         .isInt({ min: 0 })
         .withMessage("Employee salary must be a positive number"),
         
-    body("age")
+    body("dateOfBirth")
         .trim()
         .notEmpty()
-        .withMessage("Employee age is required")
-        .isInt({ min: 0 })
-        .withMessage("Employee age must be a positive number"),
+        .withMessage("Employee date of birth is required")
+        .isDate()
+        .withMessage("Must be a valid date"),
 
     body('skills')
         .isArray()

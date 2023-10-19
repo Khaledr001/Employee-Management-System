@@ -27,9 +27,9 @@ const EmployeeSchema = new mongoose.Schema({
         required: true,
         minlength: [6, "Please enter minumum 6 length password"],
     },
-    age: {
-        type: Number,
-        required: [true, "Please enter employee age"],
+    dateOfBirth: {
+        type: Date,
+        required: [true, "Please enter employee Date of Birth"],
     },
     position: {
         type: String,

@@ -4,6 +4,7 @@ import { MdEdit } from "react-icons/md";
 import { backendUrl } from "../../../secrete";
 import Loading from "../../components/loading";
 import { useGetAllEmployee } from "../../hooks/useEmployee";
+import { Link } from "react-router-dom";
 
 
 const style = {
@@ -11,11 +12,6 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  // width: 650,
-  // bgcolor: 'background.paper',
-  // border: '2px solid #000',
-  // boxShadow: 24,
-  // p: 4,
 };
 
 const AllEmployees = () => {  
@@ -191,7 +187,7 @@ const AllEmployees = () => {
                   <input defaultValue={employ?.age} type="text"  className="input input-bordered focus:outline-none w-full"  />
                 </div>
 
-                <button className="btn btn-outline btn-info mt-5 w-36 rounded-lg me-5 border text-lg">View</button>
+                <Link to={`/employee/${employ?._id}`} className="btn btn-outline btn-info mt-5 w-36 rounded-lg me-5 border text-lg">View</Link>
               </Box>
             </Box>
           </Box>

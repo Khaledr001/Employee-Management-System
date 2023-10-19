@@ -29,7 +29,7 @@ const SideBar = () => {
   return (
     // {isLogi()}
     <>
-      <div id="sidebar" className="hidden w-[290px] bg-base-200 h-full pt-5 px-3">
+      <div id="sidebar" className=" w-[290px] bg-base-200 h-full pt-5 px-3">
         <div className="grid gap-4">
           <div className="flex justify-start items-center gap-2 text-lg btn">
             <HiOutlineViewGrid className="text-2xl" />
