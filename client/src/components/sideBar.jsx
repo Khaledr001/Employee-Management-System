@@ -80,10 +80,6 @@ const SideBar = () => {
                     {" "}
                     <Link to="/admin/updateuser">update user</Link>
                   </li>
-                  <li className="btn btn-sm w-full flex justify-start">
-                    {" "}
-                    <span>delete user</span>
-                  </li>
                 </ul>
               </div>
             )}
@@ -121,10 +117,6 @@ const SideBar = () => {
                   <li className="btn btn-sm w-full flex justify-start">
                     {" "}
                     <span>update Employee</span>
-                  </li>
-                  <li className="btn btn-sm w-full flex justify-start">
-                    {" "}
-                    <span>delete employee</span>
                   </li>
                 </ul>
               </div>

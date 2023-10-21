@@ -28,11 +28,11 @@ const addEmployee = (employee) => {
   );
 };
 
-const deleteProduct = (id) => {
+const deleteEmployee = (id) => {
   return Axios(
     {
       method: "DELETE",
-      url: `/product/${id}`,
+      url: `/employee/delete/${id}`,
     },
     { withCredentials: true }
   );
@@ -44,16 +44,6 @@ const updateProduct = (id, updatedProduct) => {
       method: "PUT",
       url: `/product/${id}`,
       data: updatedProduct,
-    },
-    { withCredentials: true }
-  );
-};
-
-const getAProduct = (id) => {
-  return Axios(
-    {
-      method: "GET",
-      url: `/product/${id.id}`,
     },
     { withCredentials: true }
   );
@@ -76,13 +66,6 @@ export const useUpdateProduct = () => {
   return useMutation(updateProduct);
 };
 
-export const useDeleteProduct = () => {
-  return useMutation(deleteProduct);
+export const useDeleteEmployee = () => {
+  return useMutation(deleteEmployee);
 };
-
-export const useGetAProduct = () => {
-  return useQuery('getAProduct', getAProduct);
-}
-
-
-// export {useGetAllEmployee}
