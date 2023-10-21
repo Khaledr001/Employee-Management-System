@@ -17,18 +17,30 @@ const ViewEmployee = () => {
     console.log(error);
   }
 
+  const convertDate = (value, name) => {
+    const date = new Date(value);
+    const year = date.getFullYear();
+    // const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    const monthName = date.toLocaleDateString("en-US", { month: "long" });
+
+    console.log(monthName);
+
+    const withformat = `${day} ${monthName} ${year}`;
+
+    // const withHyphens = [day, month, year].join(" / ");
+    if (name == "join") employee.joinDate = withformat;
+    if (name == "dob") employee.dob = withformat;
+  };
+
   let employee;
   if (isSuccess) {
     employee = data?.data.payload.employee;
     console.log(employee.skills);
 
-    const date = new Date(employee.joiningDate);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
-    const withHyphens = [day, month, year].join("-");
-    employee.joinDate = withHyphens;
+    convertDate(employee.joiningDate, "join");
+    convertDate(employee.dateOfBirth, "dob");
 
     // console.log(employee);
   }
@@ -83,7 +95,7 @@ const ViewEmployee = () => {
                   </li>
                   <li className="flex">
                     <p className="md:w-[30%]">Date Of Birth : </p>
-                    <p>{employee?.age}</p>
+                    <p>{employee?.dob}</p>
                   </li>
                   <li className="flex">
                     <p className="md:w-[30%]">Address :</p>

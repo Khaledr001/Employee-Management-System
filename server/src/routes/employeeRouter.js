@@ -11,7 +11,8 @@ employeeRouter.get('/test', (req, res) => {
     res.status(200).json({message: 'test employee router'});
 });
 
-employeeRouter.post('/add', upload.single("image"), validateEmployeeRegistration, runValidation, addEmployee);
+employeeRouter.post('/add',
+    upload.single("image"), validateEmployeeRegistration, runValidation, addEmployee);
 
 employeeRouter.get('/all', getAllEmployee);
 

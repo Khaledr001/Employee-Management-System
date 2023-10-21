@@ -17,12 +17,12 @@ const getAEmployeeById = (id) => {
   });
 };
 
-const addProduct = (product) => {
+const addEmployee = (employee) => {
   return Axios(
     {
       method: "POST",
-      url: "/product/add",
-      data: product,
+      url: "/employee/add",
+      data: employee,
     },
     { withCredentials: true }
   );
@@ -59,8 +59,8 @@ const getAProduct = (id) => {
   );
 };
 
-export const useAddProduct = () => {
-  return useMutation(addProduct);
+export const useAddEmployee = () => {
+  return useMutation(addEmployee);
 };
 
 export const useGetAllEmployee = () => {

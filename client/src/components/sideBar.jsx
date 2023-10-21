@@ -1,11 +1,12 @@
 import { HiOutlineViewGrid } from "react-icons/hi";
 import { MdGroups2 } from "react-icons/md";
 import { TfiLayoutListThumb } from "react-icons/tfi";
-import { LiaLuggageCartSolid } from "react-icons/lia";
+import { FaUsers } from "react-icons/fa";
 import { MdKeyboardArrowRight, MdKeyboardArrowDown } from "react-icons/md";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { backendUrl } from "../../secrete";
 
 const SideBar = () => {
   const [parrow, setParrow] = useState(false);
@@ -14,7 +15,14 @@ const SideBar = () => {
   const [uarrow, setUarrow] = useState(false);
   const [ulist, setUlist] = useState(true);
 
-  const {isLogin} = useAuth();
+  const { isLogin } = useAuth();
+  
+  let user, img;
+  if (isLogin) {
+    user = JSON.parse(localStorage.getItem('user'));
+    img = `${backendUrl}${user.image}`;
+    // console.log(user);
+  }
 
   const handleEmployee = () => {
     setParrow(!parrow);
@@ -29,7 +37,18 @@ const SideBar = () => {
   return (
     // {isLogi()}
     <>
-      <div id="sidebar" className=" w-[290px] bg-base-200 h-full pt-5 px-3">
+      <div id="sidebar" className=" w-[270px] bg-base-200 h-full pt-5 px-3">
+        {isLogin && (
+          <div className="flex flex-col justify-center items-center gap-3 mt-2 mb-8 ">
+            <div className="avatar">
+              <div className="w-20 rounded-xl cursor-pointer">
+                <img src={img} alt="user image" />
+              </div>
+            </div>
+            <p>{ user?.name} </p>
+          </div>
+        )}
+
         <div className="grid gap-4">
           <div className="flex justify-start items-center gap-2 text-lg btn">
             <HiOutlineViewGrid className="text-2xl" />
@@ -71,20 +90,11 @@ const SideBar = () => {
           </div>
 
           <div>
-            <div className="flex justify-between items-center btn pe-5">
-              <div className="flex justify-start items-center gap-2 text-lg">
-                <TfiLayoutListThumb className="text-2xl" />
-                <Link to="/admin/allcategory">Category</Link>
-              </div>
-            </div>
-          </div>
-
-          <div>
             <div
               onClick={handleEmployee}
               className="flex justify-between items-center btn pe-5">
               <div className="flex justify-start items-center gap-2 text-lg">
-                <LiaLuggageCartSolid className="text-2xl" />
+                <FaUsers className="text-2xl" />
                 <span>Employees</span>
               </div>
               {!parrow ? (
@@ -103,7 +113,7 @@ const SideBar = () => {
                     <span>All Employees</span>
                   </Link>
                   <Link
-                    to={"/admin/add-employee"}
+                    to={"/add-employee"}
                     className="btn btn-sm w-full flex justify-start">
                     {" "}
                     <span>Add Employee</span>

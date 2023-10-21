@@ -29,13 +29,6 @@ const validateEmployeeRegistration = [
         .isEmail()
         .withMessage("Please enter a valid email address"),
 
-    body("password")
-        .trim()
-        .notEmpty()
-        .withMessage("Password is required")
-        .isLength({ min: 6 })
-        .withMessage("Password should be minimum 6 characters long"),
-
     body("phoneNumber")
         .trim()
         .notEmpty()
@@ -66,7 +59,14 @@ const validateEmployeeRegistration = [
         .trim()
         .notEmpty()
         .withMessage("Employee date of birth is required")
-        .isDate()
+        .isISO8601().toDate()
+        .withMessage("Must be a valid date"),
+
+    body("joiningDate")
+        .trim()
+        .notEmpty()
+        .withMessage("Employee joining date is required")
+        .isISO8601().toDate()
         .withMessage("Must be a valid date"),
 
     body('skills')

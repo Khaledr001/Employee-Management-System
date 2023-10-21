@@ -5,6 +5,7 @@ import Register from '../pages/authentication/register'
 import ErrorPage from '../pages/errorPage'
 import AllEmployees from '../pages/employee/allEmployees'
 import ViewEmployee from '../pages/employee/viewEmployee'
+import AddEmployee from '../pages/employee/addEmployee'
 
 
 const AppRouts = () => {
@@ -17,8 +18,11 @@ const AppRouts = () => {
           {
             path: "all-employees",
             element: <AllEmployees />,
+          },  
+          {
+            path: 'add-employee',
+            element: <AddEmployee />,
           },
-            
           {
             path: 'employee/:id',
             element: <ViewEmployee />,

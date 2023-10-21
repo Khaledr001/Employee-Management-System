@@ -12,9 +12,6 @@ const addEmployee = async (req, res) => {
             return res.status(409).json({message: `Employee already exists with this email ${email}`});
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(password, salt);
-
         const imageName = req?.file?.filename;
         let imagePath = defaultImage; 
         if (imageName) {
@@ -32,22 +29,19 @@ const addEmployee = async (req, res) => {
             education,
             email,
             phoneNumber,
-            password: hashPassword,
-            image: imagePath,
+            image: imagePath, 
         };
 
-        console.log(employeeObj);
+        console.log(employeeObj); 
         const saveEmployee = await Employee(employeeObj);
         await saveEmployee.save();
 
         // console.log(saveEmployee);
-        let employee = await saveEmployee.toJSON();
-        delete employee.password;
 
         successResponse(res, {
             statusCode: 200,
             message: "User registered successfully",
-            payload: { employee },
+            payload: { saveEmployee },
         }); 
     }
     catch (err) {

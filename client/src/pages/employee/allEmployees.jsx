@@ -43,14 +43,35 @@ const AllEmployees = () => {
     // console.log(deleteAUserResponse.data?.data);
   };
 
-  const handleJoinDate = (joiningDate, index) => {
-      const date = new Date(joiningDate);
+  const handleJoinDate = (getDate, index, name) => {
+      const date = new Date(getDate);
       const year = date.getFullYear();
       const month = date.getMonth() + 1;
       const day = date.getDate();
 
       const withHyphens = [day, month, year].join("-");
-    employees[index].joinDate = withHyphens;
+      if(name == 'join')  employees[index].joinDate = withHyphens;
+      if(name == 'dob')  employees[index].dob = withHyphens;
+  }
+
+  function calculateAge(birthDate, index) {
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+    const monthDiff = today.getMonth() - birthDateObj.getMonth();
+
+    // If the birthdate has not occurred this year yet
+    // or if the birthdate is this month but has not occurred yet
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDateObj.getDate())
+    ) {
+      age--;
+    }
+
+    if (!employees[index].age) employees[index].age = age;
+    // return age;
   }
 
   const handleClick = (employee) => { 
@@ -93,7 +114,8 @@ const AllEmployees = () => {
             <tbody>
               {/* row */}
               {employees?.map((employee, index) => {
-                handleJoinDate(employee.joiningDate, index);
+                handleJoinDate(employee.joiningDate, index, 'join');
+                calculateAge(employee.dateOfBirth, index);
                 let img = `${backendUrl}${employee.image}`
                 return (
                   <tr onClick={() => handleClick(employee)} key={employee._id} className="hover">

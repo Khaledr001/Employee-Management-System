@@ -22,11 +22,6 @@ const EmployeeSchema = new mongoose.Schema({
         minlength: [3, "Minimun length of last name should be 3 characters"],
         maxlength: [30, "Maximun length of last name should be 50 characters"],
     },
-    password: {
-        type: String,
-        required: true,
-        minlength: [6, "Please enter minumum 6 length password"],
-    },
     dateOfBirth: {
         type: Date,
         required: [true, "Please enter employee Date of Birth"],
