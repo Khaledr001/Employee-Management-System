@@ -1,10 +1,11 @@
 import { Box, Modal } from "@mui/material";
 import { useState } from "react";
-import { MdEdit } from "react-icons/md";
+import { FiDelete, FiEdit } from "react-icons/fi";
 import { backendUrl } from "../../../secrete";
 import Loading from "../../components/loading";
 import { useDeleteEmployee, useGetAllEmployee } from "../../hooks/useEmployee";
 import { Link } from "react-router-dom";
+// import UserDataGrid from "../../components/dataGrid";
 
 const style = {
   position: "absolute",
@@ -14,6 +15,7 @@ const style = {
 };
 
 const AllEmployees = () => {
+  const [searchValue, setSearchValue] = useState('');
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -25,9 +27,11 @@ const AllEmployees = () => {
   const deleteEmployeeResponse = useDeleteEmployee();
   // const deleteAUserResponse = useDeleteAUser();
 
-  if (getAllEmployeeResponse.isLoading || deleteEmployeeResponse.isLoading) return <Loading />;
-  
-  if (getAllEmployeeResponse.isError || deleteEmployeeResponse.isError) return <p>Error</p>;
+  if (getAllEmployeeResponse.isLoading || deleteEmployeeResponse.isLoading)
+    return <Loading />;
+
+  if (getAllEmployeeResponse.isError || deleteEmployeeResponse.isError)
+    return <p>Error</p>;
 
   let employees;
   if (getAllEmployeeResponse.isSuccess) {
@@ -35,7 +39,7 @@ const AllEmployees = () => {
   }
 
   if (deleteEmployeeResponse.isSuccess) {
-    window.location.reload(); 
+    window.location.reload();
   }
   // if (deleteAUserResponse.isSuccess) window.location.reload();
 
@@ -43,7 +47,7 @@ const AllEmployees = () => {
     console.log(employeeId);
     await deleteEmployeeResponse.mutate(employeeId);
     // handleDelete()
-  }
+  };
 
   const handleDelete = (id) => {
     document.getElementById("deleteEmployee").showModal();
@@ -105,6 +109,37 @@ const AllEmployees = () => {
 
         <div className="mt-5 border border-info py-3 rounded-lg">
           <div className="overflow-x-auto mx-3">
+            <div className="my-5 mx-1 flex justify-between items-center">
+              <div className="relative">
+                <span
+                  // onClick={handleEmployeeSearch}
+                  className="absolute hover:cursor-pointer btn-sm left-0.5 top-3.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </span>
+                <input
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  type="text"
+                  placeholder="Search Employee"
+                  className=" input input-bordered rounded-xl border-info focus:outline-none focus:border-info focus:border-2 h-12 ps-10 pe-3 w-56 md:w-[400px] text-base"
+                />
+              </div>
+
+              <Link to="/add-employee" className="btn btn-info">
+                <span className="text-2xl">+</span> Add Employee
+              </Link>
+            </div>
             <table className="table">
               {/* head */}
               <thead>
@@ -120,54 +155,68 @@ const AllEmployees = () => {
               </thead>
               <tbody>
                 {/* row */}
-                {employees?.map((employee, index) => {
-                  handleJoinDate(employee.joiningDate, index, "join");
-                  calculateAge(employee.dateOfBirth, index);
-                  let img = `${backendUrl}${employee.image}`;
-                  return (
-                    <tr key={employee._id} className="hover">
-                      <td className="avatar" onClick={() => handleClick(employee)}>
-                      <div className="w-12 rounded-full">
-                        <img src={img} alt="" />
-                      </div>
-                      </td>
-                      <td onClick={() => handleClick(employee)}>
-                        {employee.firstName} {employee.lastName}
-                      </td>
-                      <td onClick={() => handleClick(employee)}>
-                        {employee.email}
-                      </td>
-                      <td onClick={() => handleClick(employee)}>
-                        {employee.phoneNumber}
-                      </td>
-                      <td onClick={() => handleClick(employee)}>
-                        {employee.age}
-                      </td>
-                      <td onClick={() => handleClick(employee)}>
-                        {employee.position}
-                      </td>
-                      <td className="flex gap-1 mt-1">
-                        <button
-                          value={employee._id}
-                          className="btn btn-sm btn-info btn-outline rounded-3xl me-1 flex">
-                          <MdEdit />
-                          <p className="text-xs">Edit</p>
-                        </button>
-                        <button
-                          value={employee._id}
-                          onClick={() => handleDelete(employee._id)}
-                          className="btn btn-sm btn-error btn-outline rounded-3xl text-xs">
-                          delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {employees
+                  ?.filter((employee) => {
+                    const toMatch = `${employee.firstName} ${employee.lastName} ${employee.email} ${employee.position}`;
+                    return searchValue.toLowerCase() === ""
+                      ? employee
+                      : toMatch
+                          .toLowerCase()
+                          .includes(searchValue.toLowerCase());
+                  })
+                  .map((employee, index) => {
+                    handleJoinDate(employee.joiningDate, index, "join");
+                    calculateAge(employee.dateOfBirth, index);
+                    let img = `${backendUrl}${employee.image}`;
+                    return (
+                      <tr key={employee._id} className="hover">
+                        <td
+                          className="avatar"
+                          onClick={() => handleClick(employee)}>
+                          <div className="w-10 rounded-full">
+                            <img src={img} alt="" />
+                          </div>
+                        </td>
+                        <td onClick={() => handleClick(employee)}>
+                          {employee.firstName} {employee.lastName}
+                        </td>
+                        <td onClick={() => handleClick(employee)}>
+                          {employee.email}
+                        </td>
+                        <td onClick={() => handleClick(employee)}>
+                          {employee.phoneNumber}
+                        </td>
+                        <td onClick={() => handleClick(employee)}>
+                          {employee.age}
+                        </td>
+                        <td onClick={() => handleClick(employee)}>
+                          {employee.position}
+                        </td>
+                        <td className="flex gap-1 mt-1 items-center justify-center">
+                          <button
+                            value={employee._id}
+                            className="btn btn-sm btn-info btn-outline px-2.5 me-1 flex">
+                            <FiEdit className="text-base" />
+                          </button>
+                          <button
+                            value={employee._id}
+                            onClick={() => handleDelete(employee._id)}
+                            className="btn btn-sm btn-error btn-outline px-2.5">
+                            <FiDelete className="text-base" />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>
         </div>
       </div>
+
+      {/* <div className="m-10">
+        <UserDataGrid employees={employees} />
+      </div> */}
 
       <dialog
         id="deleteEmployee"
@@ -181,7 +230,11 @@ const AllEmployees = () => {
             parmanently
           </p>
           <div className="modal-action flex gap-4">
-            <button onClick={deleteEmployeeState} className="btn btn-sm h-10 btn-error">Delete</button>
+            <button
+              onClick={deleteEmployeeState}
+              className="btn btn-sm h-10 btn-error">
+              Delete
+            </button>
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button className="btn btn-sm h-10">Close</button>
