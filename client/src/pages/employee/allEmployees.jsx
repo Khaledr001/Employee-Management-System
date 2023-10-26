@@ -1,11 +1,10 @@
 import { Box, Modal } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiDelete, FiEdit } from "react-icons/fi";
 import { backendUrl } from "../../../secrete";
 import Loading from "../../components/loading";
 import { useDeleteEmployee, useGetAllEmployee } from "../../hooks/useEmployee";
 import { Link } from "react-router-dom";
-// import UserDataGrid from "../../components/dataGrid";
 
 const style = {
   position: "absolute",
@@ -20,14 +19,18 @@ const AllEmployees = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [employeeId, setEmployeeId] = useState();
-
+  const [dropdown, setDropdown] = useState('');
   const [employ, setEmploy] = useState();
 
-  const getAllEmployeeResponse = useGetAllEmployee();
+  const getAllEmployeeResponse = useGetAllEmployee(dropdown);
   const deleteEmployeeResponse = useDeleteEmployee();
   // const deleteAUserResponse = useDeleteAUser();
 
-  if (getAllEmployeeResponse.isLoading || deleteEmployeeResponse.isLoading)
+  useEffect(() => {
+    getAllEmployeeResponse.refetch();
+  }, [dropdown])
+
+  if (getAllEmployeeResponse.isLoading || getAllEmployeeResponse.isRefetching || deleteEmployeeResponse.isLoading)
     return <Loading />;
 
   if (getAllEmployeeResponse.isError || deleteEmployeeResponse.isError)
@@ -95,6 +98,10 @@ const AllEmployees = () => {
     }
   };
 
+  const handleDropdownChange = (e) => {
+    setDropdown(e.target.value);
+  }
+
   return (
     <>
       <div>
@@ -134,6 +141,24 @@ const AllEmployees = () => {
                   placeholder="Search Employee"
                   className=" input input-bordered rounded-xl border-info focus:outline-none focus:border-info focus:border-2 h-12 ps-10 pe-3 w-56 md:w-[400px] text-base"
                 />
+              </div>
+
+              <div>
+                <select
+                  className="select select-info focus:border-none w-full max-w-xs"
+                  defaultValue='nothiong'
+                  value={dropdown}
+                  onChange={handleDropdownChange}>
+                  <option disabled selected value="">
+                    Select Position
+                  </option>
+                  <option value="manager">Manager</option>
+                  <option value="data analyst">Data Analyst</option>
+                  <option value="froentend developer">
+                    Froentend Developer
+                  </option>
+                  <option value="backend developer">Backend Developer</option>
+                </select>
               </div>
 
               <Link to="/add-employee" className="btn btn-info">
@@ -213,10 +238,6 @@ const AllEmployees = () => {
           </div>
         </div>
       </div>
-
-      {/* <div className="m-10">
-        <UserDataGrid employees={employees} />
-      </div> */}
 
       <dialog
         id="deleteEmployee"

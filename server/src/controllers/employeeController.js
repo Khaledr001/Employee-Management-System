@@ -55,7 +55,7 @@ const addEmployee = async (req, res) => {
 const getAllEmployee = async (req, res) => { 
     try {
         const search = req?.query?.search || '';
-
+        console.log('search = ' + search);
         const searchRegExp = new RegExp('.*' + search + '.*', 'i');
         const filter = {
             $or: [

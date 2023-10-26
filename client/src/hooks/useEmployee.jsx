@@ -1,16 +1,21 @@
 import { useMutation, useQuery } from "react-query";
 import Axios from "../axios";
 
-const getAllEmployee = () => {
-  return Axios({
-    method: "GET",
-    url: "/employee/all",
-  });
-};
+
+// const getAllEmployee = ({search}) => {
+//   console.log(search);
+//   return Axios({
+//     method: "GET",
+//     url: "/employee/all",
+//     params: { 
+//       search: '',
+//     },
+//   });
+// };
 
 const getAEmployeeById = (id) => {
   // console.log(id);
-  
+
   return Axios({
     method: "GET",
     url: `/employee/${id}`,
@@ -53,14 +58,31 @@ export const useAddEmployee = () => {
   return useMutation(addEmployee);
 };
 
-export const useGetAllEmployee = () => {
-  return useQuery("getAllEmployee", getAllEmployee);
+export const useGetAllEmployee = (option) => {
+  // let search;
+  // (option) ? search = option : null;
+  console.log(option);
+  return useQuery(
+    "getAllEmployee",
+    () =>
+      Axios({
+        method: "GET",
+        url: "/employee/all",
+        params: {
+          search: option,
+        },
+      }),
+    {
+      // refetchInterval: 1000,
+      staleTime: 0,
+    }
+  );
 };
 
 export const useGetAEmployeeById = (id) => {
   // console.log(id);
   return useQuery("getAEmployeeById", () => getAEmployeeById(id));
-}
+};
 
 export const useUpdateProduct = () => {
   return useMutation(updateProduct);
