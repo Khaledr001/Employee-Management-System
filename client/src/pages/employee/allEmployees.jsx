@@ -1,6 +1,7 @@
 import { Box, Modal } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FiDelete, FiEdit } from "react-icons/fi";
+import { BiSort } from "react-icons/bi";
 import { backendUrl } from "../../../secrete";
 import Loading from "../../components/loading";
 import { useDeleteEmployee, useGetAllEmployee } from "../../hooks/useEmployee";
@@ -14,31 +15,44 @@ const style = {
 };
 
 const AllEmployees = () => {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [employeeId, setEmployeeId] = useState();
-  const [dropdown, setDropdown] = useState('');
+  const [dropdown, setDropdown] = useState("");
   const [employ, setEmploy] = useState();
+  const [order, setOrder] = useState("ASC");
+  const [employees, setEmployees] = useState();
 
   const getAllEmployeeResponse = useGetAllEmployee(dropdown);
   const deleteEmployeeResponse = useDeleteEmployee();
   // const deleteAUserResponse = useDeleteAUser();
 
   useEffect(() => {
-    getAllEmployeeResponse.refetch();
-  }, [dropdown])
+    setEmployees(getAllEmployeeResponse.data?.data.payload.employees);
+  });
 
-  if (getAllEmployeeResponse.isLoading || getAllEmployeeResponse.isRefetching || deleteEmployeeResponse.isLoading)
+  useEffect(() => {
+    getAllEmployeeResponse.refetch();
+  }, [dropdown]);
+
+  if (
+    getAllEmployeeResponse.isLoading ||
+    getAllEmployeeResponse.isRefetching ||
+    deleteEmployeeResponse.isLoading
+  )
     return <Loading />;
 
   if (getAllEmployeeResponse.isError || deleteEmployeeResponse.isError)
     return <p>Error</p>;
 
-  let employees;
+  // let employees;
+  let a = 0;
   if (getAllEmployeeResponse.isSuccess) {
-    employees = getAllEmployeeResponse.data?.data.payload.employees;
+    // console.log(a++);
+    // const employee = getAllEmployeeResponse.data?.data.payload.employees;
+    // setEmployees(employee);
   }
 
   if (deleteEmployeeResponse.isSuccess) {
@@ -100,7 +114,26 @@ const AllEmployees = () => {
 
   const handleDropdownChange = (e) => {
     setDropdown(e.target.value);
-  }
+  };
+
+  const sorting = (col) => {
+    console.log(col);
+    if (order == "ASC") {
+      const sorted = employees.sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      console.log(sorted);
+      setEmployees(sorted);
+      setOrder("DESC");
+    } else if (order == "DESC") {
+      const sorted = employees.sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      console.log(sorted);
+      setEmployees(sorted);
+      setOrder("ASC");
+    }
+  };
 
   return (
     <>
@@ -146,11 +179,11 @@ const AllEmployees = () => {
               <div>
                 <select
                   className="select select-info focus:border-none w-full max-w-xs"
-                  defaultValue='nothiong'
+                  defaultValue="nothiong"
                   value={dropdown}
                   onChange={handleDropdownChange}>
-                  <option disabled selected value="">
-                    Select Position
+                  <option selected value="">
+                    All Employee
                   </option>
                   <option value="manager">Manager</option>
                   <option value="data analyst">Data Analyst</option>
@@ -170,10 +203,28 @@ const AllEmployees = () => {
               <thead>
                 <tr className="bg-base-300 text-base">
                   <th>IMAGE</th>
-                  <th>NAME</th>
-                  <th>EMAIL</th>
+                  <th className="flex items-center gap-2">
+                    NAME{" "}
+                    <span
+                      onClick={() => sorting("firstName")}
+                      className="cursor-pointer">
+                      <BiSort />
+                    </span>{" "}
+                  </th>
+
                   <th>PHONE</th>
-                  <th>AGE</th>
+                  <th className="flex items-center gap-2">
+                    EMAIL{" "}
+                    <span
+                      onClick={() => sorting("firstName")}
+                      className="cursor-pointer">
+                      <BiSort />
+                    </span>{" "}
+                  </th>
+                  
+                  <th>
+                    AGE{" "}
+                  </th>
                   <th>POSITION</th>
                   <th>ACTION</th>
                 </tr>
@@ -194,7 +245,7 @@ const AllEmployees = () => {
                     calculateAge(employee.dateOfBirth, index);
                     let img = `${backendUrl}${employee.image}`;
                     return (
-                      <tr key={employee._id} className="hover">
+                      <tr key={employee._id} className="hover text-base">
                         <td
                           className="avatar"
                           onClick={() => handleClick(employee)}>
@@ -205,11 +256,12 @@ const AllEmployees = () => {
                         <td onClick={() => handleClick(employee)}>
                           {employee.firstName} {employee.lastName}
                         </td>
-                        <td onClick={() => handleClick(employee)}>
-                          {employee.email}
-                        </td>
+
                         <td onClick={() => handleClick(employee)}>
                           {employee.phoneNumber}
+                        </td>
+                        <td onClick={() => handleClick(employee)}>
+                          {employee.email}
                         </td>
                         <td onClick={() => handleClick(employee)}>
                           {employee.age}
@@ -217,7 +269,7 @@ const AllEmployees = () => {
                         <td onClick={() => handleClick(employee)}>
                           {employee.position}
                         </td>
-                        <td className="flex gap-1 mt-1 items-center justify-center">
+                        <td className="flex gap-1 mt-1 items-center justify-start">
                           <button
                             value={employee._id}
                             className="btn btn-sm btn-info btn-outline px-2.5 me-1 flex">
