@@ -31,7 +31,7 @@ const AllEmployees = () => {
 
   useEffect(() => {
     setEmployees(getAllEmployeeResponse.data?.data.payload.employees);
-  });
+  }, [getAllEmployeeResponse.data?.data.payload.employees]);
 
   useEffect(() => {
     getAllEmployeeResponse.refetch();
