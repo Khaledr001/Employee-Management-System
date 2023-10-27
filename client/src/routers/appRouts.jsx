@@ -6,6 +6,7 @@ import ErrorPage from '../pages/errorPage'
 import AllEmployees from '../pages/employee/allEmployees'
 import ViewEmployee from '../pages/employee/viewEmployee'
 import AddEmployee from '../pages/employee/addEmployee'
+import EditEmployee from '../pages/employee/editEmployee'
 
 
 const AppRouts = () => {
@@ -26,6 +27,10 @@ const AppRouts = () => {
           {
             path: 'employee/:id',
             element: <ViewEmployee />,
+          },
+          {
+            path: 'edit/:id',
+            element: <EditEmployee />,
           },
         ],
       },

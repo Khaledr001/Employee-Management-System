@@ -2,17 +2,6 @@ import { useMutation, useQuery } from "react-query";
 import Axios from "../axios";
 
 
-// const getAllEmployee = ({search}) => {
-//   console.log(search);
-//   return Axios({
-//     method: "GET",
-//     url: "/employee/all",
-//     params: { 
-//       search: '',
-//     },
-//   });
-// };
-
 const getAEmployeeById = (id) => {
   // console.log(id);
 
@@ -43,12 +32,13 @@ const deleteEmployee = (id) => {
   );
 };
 
-const updateProduct = (id, updatedProduct) => {
+export const updateEmployee = ({id, data}) => {
+  console.log(data, id);
   return Axios(
     {
       method: "PUT",
-      url: `/product/${id}`,
-      data: updatedProduct,
+      url: `/employee/update/${id}`,
+      data: data,
     },
     { withCredentials: true }
   );
@@ -59,9 +49,6 @@ export const useAddEmployee = () => {
 };
 
 export const useGetAllEmployee = (option) => {
-  // let search;
-  // (option) ? search = option : null;
-  console.log(option);
   return useQuery(
     "getAllEmployee",
     () =>
@@ -80,13 +67,9 @@ export const useGetAllEmployee = (option) => {
 };
 
 export const useGetAEmployeeById = (id) => {
-  // console.log(id);
   return useQuery("getAEmployeeById", () => getAEmployeeById(id));
 };
 
-export const useUpdateProduct = () => {
-  return useMutation(updateProduct);
-};
 
 export const useDeleteEmployee = () => {
   return useMutation(deleteEmployee);

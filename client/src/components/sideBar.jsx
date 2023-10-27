@@ -1,12 +1,11 @@
-import { HiOutlineViewGrid } from "react-icons/hi";
 import { MdGroups2 } from "react-icons/md";
-import { TfiLayoutListThumb } from "react-icons/tfi";
 import { FaUsers } from "react-icons/fa";
 import { MdKeyboardArrowRight, MdKeyboardArrowDown } from "react-icons/md";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { backendUrl } from "../../secrete";
+import { Dashboard } from "@mui/icons-material";
 
 const SideBar = () => {
   const [parrow, setParrow] = useState(false);
@@ -50,10 +49,10 @@ const SideBar = () => {
         )}
 
         <div className="grid gap-4">
-          <div className="flex justify-start items-center gap-2 text-lg btn">
-            <HiOutlineViewGrid className="text-2xl" />
+          <Link to="/" className="flex justify-start items-center gap-2 text-lg btn">
+            <Dashboard />
             <span>Dashboard</span>
-          </div>
+          </Link>
 
           <div>
             <div

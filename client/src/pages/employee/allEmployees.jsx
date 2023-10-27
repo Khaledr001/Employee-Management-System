@@ -47,14 +47,6 @@ const AllEmployees = () => {
   if (getAllEmployeeResponse.isError || deleteEmployeeResponse.isError)
     return <p>Error</p>;
 
-  // let employees;
-  let a = 0;
-  if (getAllEmployeeResponse.isSuccess) {
-    // console.log(a++);
-    // const employee = getAllEmployeeResponse.data?.data.payload.employees;
-    // setEmployees(employee);
-  }
-
   if (deleteEmployeeResponse.isSuccess) {
     window.location.reload();
   }
@@ -221,10 +213,8 @@ const AllEmployees = () => {
                       <BiSort />
                     </span>{" "}
                   </th>
-                  
-                  <th>
-                    AGE{" "}
-                  </th>
+
+                  <th>AGE </th>
                   <th>POSITION</th>
                   <th>ACTION</th>
                 </tr>
@@ -270,11 +260,11 @@ const AllEmployees = () => {
                           {employee.position}
                         </td>
                         <td className="flex gap-1 mt-1 items-center justify-start">
-                          <button
-                            value={employee._id}
+                          <Link
+                            to={`/edit/${employee._id}`}
                             className="btn btn-sm btn-info btn-outline px-2.5 me-1 flex">
                             <FiEdit className="text-base" />
-                          </button>
+                          </Link>
                           <button
                             value={employee._id}
                             onClick={() => handleDelete(employee._id)}

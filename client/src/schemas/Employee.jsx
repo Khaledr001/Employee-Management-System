@@ -1,22 +1,21 @@
 import * as Yup from "yup";
 
 const addEmployee = Yup.object({
-  image: Yup.mixed()
-    .required("Please select a product image")
-    .test(
-      "FILE_SIZE",
-      "Image size must be within 2 MB",
-      (value) => value && value[0].size <= 2*1024*1024
-    )
-    .test(
-      "FILE_FORMAT",
-      "Product image must be in png, jpg or jpeg type",
-      (value) =>
-        value &&
-        ["image/png", "image/jpg", "image/jpeg", "image/webp"].includes(
-          value[0].type
-        )
-    ),
+  // image: Yup.mixed()
+  //   .test(
+  //     "FILE_SIZE",
+  //     "Image size must be within 2 MB",
+  //     (value) => value && value[0].size <= 2*1024*1024
+  //   )
+  //   .test(
+  //     "FILE_FORMAT",
+  //     "Product image must be in png, jpg or jpeg type",
+  //     (value) =>
+  //       value &&
+  //       ["image/png", "image/jpg", "image/jpeg", "image/webp"].includes(
+  //         value[0].type
+  //       )
+  //   ),
   firstName: Yup.string()
     .min(3)
     .max(70)

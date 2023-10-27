@@ -101,7 +101,7 @@ const getAEmployee = async (req, res) => {
                 message: 'Employee not found'
             });
         }
-        console.log(employee);
+        // console.log(employee);
         successResponse(res, {
             statusCode: 200,
             message: 'Employee found',
@@ -115,7 +115,6 @@ const getAEmployee = async (req, res) => {
         });
     }
 }
-
 const updateEmployee = async (req, res, next) => {
     try {
         const imageName = req?.file?.filename;
@@ -123,11 +122,11 @@ const updateEmployee = async (req, res, next) => {
         if (imageName) {
             imagePath = `/public/employeeImage/${imageName}`;
         }
-
+ 
         if (!imagePath)
             req.body.image = imagePath;
 
-        const employeeObj = await Employee.findByIdAndUpdate(req?.params?.id, req?.body, {
+        const employeeObj =await Employee.findByIdAndUpdate(req?.params?.id, req?.body, {
             new: true,
             runValidators: true,
         });
@@ -137,6 +136,7 @@ const updateEmployee = async (req, res, next) => {
                 message: `Employee does not found with id ${req?.params.id}`,
             });
         } else {
+            console.log(employeeObj);
             successResponse(res, {
                 statusCode: 200,
                 message: `Employee ${employeeObj.firstName} ${employeeObj.lastName} updated successfully`,
