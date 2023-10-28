@@ -7,42 +7,52 @@ import AllEmployees from '../pages/employee/allEmployees'
 import ViewEmployee from '../pages/employee/viewEmployee'
 import AddEmployee from '../pages/employee/addEmployee'
 import EditEmployee from '../pages/employee/editEmployee'
+import AllUsers from '../pages/users/allUser'
+import ViewUser from '../pages/users/viewUser'
 
 
 const AppRouts = () => {
     const routes = createBrowserRouter([
       {
-        path: '/',
+        path: "/",
         element: <App />,
         errorPage: <ErrorPage />,
         children: [
           {
+            path: "all-users",
+            element: <AllUsers />,
+          },
+          {
+            path: "user/:id",
+            element: <ViewUser />,
+          },
+          {
             path: "all-employees",
             element: <AllEmployees />,
-          },  
+          },
           {
-            path: 'add-employee',
+            path: "add-employee",
             element: <AddEmployee />,
           },
           {
-            path: 'employee/:id',
+            path: "employee/:id",
             element: <ViewEmployee />,
           },
           {
-            path: 'edit/:id',
+            path: "edit/:id",
             element: <EditEmployee />,
           },
         ],
       },
       {
-        path: '/login',
-          element: <Login />,
+        path: "/login",
+        element: <Login />,
       },
       {
-        path: '/register',
+        path: "/register",
         element: <Register />,
-      }
-    ]) 
+      },
+    ]); 
   return (
     <RouterProvider router={routes} />
   )

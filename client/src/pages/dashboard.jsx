@@ -45,12 +45,12 @@ export default function Dashboard() {
       age--;
     }
     totalAge += age;
-  }
+  };
 
   if (getEmployeeResponse.isSuccess) {
     employees?.map((employee) => {
       calculateAge(employee.dateOfBirth);
-    })
+    });
   }
 
   return (
@@ -60,13 +60,14 @@ export default function Dashboard() {
         <MyCard title={"Total Users"} number={users?.length} />
         <MyCard
           title={"Average Employee Age"}
-          number={(totalAge / employees?.length)}
+          number={totalAge / employees?.length}
         />
       </div>
 
-      {employees && <Barchart employees={employees} />}
-
-      {employees && <Linechart employees={employees} />}
+      <div className="mt-10 flex gap-10 flex-col lg:flex-row">
+        {employees && <Barchart employees={employees} />}
+        {employees && <Linechart employees={employees} />}
+      </div>
     </>
   );
 }

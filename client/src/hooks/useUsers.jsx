@@ -6,7 +6,7 @@ const getAuserById = (id) => {
 
   return Axios({
     method: "GET",
-    url: `/user/${id}`,
+    url: `/users/${id}`,
   });
 };
 

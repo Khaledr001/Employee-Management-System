@@ -8,7 +8,7 @@ const chartSetting = {
       //   label: "rainfall (mm)",
     },
   ],
-  width: 800,
+  width: 600,
   height: 400,
   sx: {
     [`.${axisClasses.left} .${axisClasses.label}`]: {
@@ -19,7 +19,7 @@ const chartSetting = {
 
 export default function Linechart({ employees }) {
   return (
-    <div className="bg-white mt-10 rounded-md w-fit ps-5">
+    <div className="bg-white rounded-md w-fit ps-5">
       <LineChart
         dataset={employees}
         xAxis={[
