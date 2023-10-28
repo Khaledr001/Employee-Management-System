@@ -134,7 +134,7 @@ const AllEmployees = () => {
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold  md:ms-5 lg:ms-5">
             All employees
           </h1>
-          <h1 className="text-lg lg:text-xl text-success font-bold md:me-5 lg:me-5">
+          <h1 className="text-xl md:text-2xl text-success font-extrabold md:me-5 lg:me-5">
             Total employees : {employees?.length}
           </h1>
         </div>

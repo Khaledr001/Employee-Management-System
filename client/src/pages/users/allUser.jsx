@@ -19,7 +19,6 @@ const AllUsers = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [usrId, setusrId] = useState();
   const [user, setuser] = useState();
   const [order, setOrder] = useState("ASC");
   const [users, setUsers] = useState();
@@ -30,29 +29,13 @@ const AllUsers = () => {
     setUsers(getAllUserResponse.data?.data.payload.users);
   }, [getAllUserResponse.data?.data.payload.users]);
 
-  useEffect(() => {
-    getAllUserResponse.refetch();
-  }, []);
-
   if (
     getAllUserResponse.isLoading ||
     getAllUserResponse.isRefetching
-  )
-    return <Loading />;
+  ) return <Loading />;
 
   if (getAllUserResponse.isError)
     return <p>Error</p>;
-
-  const handleJoinDate = (getDate, index, name) => {
-    const date = new Date(getDate);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
-    const withHyphens = [day, month, year].join("-");
-    if (name == "join") users[index].joinDate = withHyphens;
-    if (name == "dob") users[index].dob = withHyphens;
-  }; 
 
   const handleClick = (usr) => {
     setuser(usr);
@@ -117,7 +100,7 @@ const AllUsers = () => {
                 <input
                   onChange={(e) => setSearchValue(e.target.value)}
                   type="text"
-                  placeholder="Search usr"
+                  placeholder="Search user"
                   className=" input input-bordered rounded-xl border-info focus:outline-none focus:border-info focus:border-2 h-12 ps-10 pe-3 w-56 md:w-[400px] text-base"
                 />
               </div>
@@ -151,7 +134,7 @@ const AllUsers = () => {
                 {/* row */}
                 {users
                   ?.filter((usr) => {
-                    const toMatch = `${usr.firstName} ${usr.lastName} ${usr.email} ${usr.position}`;
+                    const toMatch = `${usr.name} ${usr.email} ${usr.position}`;
                     return searchValue.toLowerCase() === ""
                       ? usr
                       : toMatch
@@ -159,7 +142,6 @@ const AllUsers = () => {
                           .includes(searchValue.toLowerCase());
                   })
                   .map((usr, index) => {
-                    handleJoinDate(usr.joiningDate, index, "join");
                     const age = calculateAge(usr.dateOfBirth);
                     users[index].age = age;
                     let img = `${backendUrl}${usr.image}`;

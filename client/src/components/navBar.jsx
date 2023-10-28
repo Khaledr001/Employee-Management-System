@@ -7,6 +7,8 @@ import { PiWarningCircleBold } from "react-icons/pi";
 import { useAuth } from "../hooks/useAuth";
 import userServices from "../services/userServices";
 import { backendUrl } from "../../secrete";
+import { useGetAllEmployee } from "../hooks/useEmployee";
+import Loading from "./loading";
 
 function Navbar() { 
   const handleToggle = (e) => {
@@ -19,7 +21,11 @@ function Navbar() {
   );
   const [sideBar, setSideBar] = useState(false);
   const [userImage, setUserImage] = useState();
-
+  const [search, setSearch] = useState();
+  
+  const { data, isLoading, isError, isSuccess, refetch } = useGetAllEmployee(search);
+  const { isLogin, onLogout } = useAuth();
+  
   useEffect(() => {
     let user = localStorage.getItem("user");
     user = JSON.parse(user);
@@ -43,9 +49,20 @@ function Navbar() {
     }
   }
 
-  const handleEmployeeSearch = () => { }
+  const handleEmployeeSearch = () => {
+    // console.log(search);
+    refetch();
+
+  }
   
-  const { isLogin, onLogout } = useAuth();
+  if (isLoading) {
+    <Loading />
+  }
+  
+  if (isSuccess) {
+    //  console.log(data?.data.payload.employees);
+   }
+
 
   return (
     <div className="fixed shadow-lg z-10 top-0 right-0 left-0 ">
@@ -58,7 +75,7 @@ function Navbar() {
           </Link>
 
           {isLogin() ? (
-            <label className="btn btn-sm btn-circle hover:bg-purple-400 swap swap-rotate">
+            <label className="btn btn-sm btn-circle swap swap-rotate">
               {/* this hidden checkbox controls the state */}
               <input onClick={handleSidebar} className="hidden" type="checkbox" />
 
@@ -88,6 +105,7 @@ function Navbar() {
             <input
               type="text"
               placeholder="Search Employee"
+              onChange={(e) => {setSearch(e.target.value);}}
               className="input input-bordered rounded-xl focus:outline-none focus:border-info h-10 pe-7 ps-3 w-44 md:w-[420px] lg:w-[500px] text-base"
             />
             <span onClick={handleEmployeeSearch} className="absolute hover:cursor-pointer btn-sm right-1 top-2.5">

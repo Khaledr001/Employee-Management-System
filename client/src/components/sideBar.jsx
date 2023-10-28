@@ -11,9 +11,6 @@ const SideBar = () => {
   const [parrow, setParrow] = useState(false);
   const [plist, setPlist] = useState(true);
 
-  const [uarrow, setUarrow] = useState(false);
-  const [ulist, setUlist] = useState(true);
-
   const { isLogin } = useAuth();
   
   let user, img;
@@ -26,11 +23,6 @@ const SideBar = () => {
   const handleEmployee = () => {
     setParrow(!parrow);
     setPlist(!plist);
-  };
-
-  const handleUser = () => {
-    setUarrow(!uarrow);
-    setUlist(!ulist);
   };
 
   return (
@@ -55,33 +47,14 @@ const SideBar = () => {
           </Link>
 
           <div>
-            <div
-              onClick={handleUser}
+            <Link to="all-users"
               className="flex justify-between items-center btn pe-5">
               <div className="flex justify-start items-center gap-2 text-lg">
                 <MdGroups2 className="text-2xl" />
                 <span>users</span>
               </div>
-              {!uarrow ? (
-                <MdKeyboardArrowRight className="text-2xl" />
-              ) : (
-                <MdKeyboardArrowDown className="text-2xl" />
-              )}
-            </div>
-            {!ulist && (
-              <div className="grid ps-9 pt-1">
-                <ul className="">
-                  <li className="btn btn-sm w-full flex justify-start">
-                    {" "}
-                    <Link to="/all-users">All users</Link>
-                  </li>
-                  <li className="btn btn-sm w-full flex justify-start">
-                    {" "}
-                    <Link to="/admin/updateuser">update user</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
+            </Link>
+            
           </div>
 
           <div>
