@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import { PiWarningCircleBold } from "react-icons/pi";
 import { useAuth } from "../hooks/useAuth";
@@ -25,6 +25,8 @@ function Navbar() {
   
   const { data, isLoading, isError, isSuccess, refetch } = useGetAllEmployee(search);
   const { isLogin, onLogout } = useAuth();
+
+  const navigate = useNavigate();
   
   useEffect(() => {
     let user = localStorage.getItem("user");
@@ -52,7 +54,8 @@ function Navbar() {
   const handleEmployeeSearch = () => {
     // console.log(search);
     refetch();
-
+    // setSearch('');
+    navigate('/all-employees');
   }
   
   if (isLoading) {
@@ -69,7 +72,7 @@ function Navbar() {
       <div id="nav1" className="navbar bg-base-200 flex justify-between">
         <div className="flex justify-between lg:min-w-[260px]">
           <Link
-            to="#"
+            to="/"
             className="btn btn-ghost normal-case text-2xl text-orange-500">
             EMS
           </Link>
@@ -106,7 +109,7 @@ function Navbar() {
               type="text"
               placeholder="Search Employee"
               onChange={(e) => {setSearch(e.target.value);}}
-              className="input input-bordered rounded-xl focus:outline-none focus:border-info h-10 pe-7 ps-3 w-44 md:w-[420px] lg:w-[500px] text-base"
+              className="input input-bordered rounded-xl focus:outline-none focus:border-info h-10 pe-7 ps-4 w-44 md:w-[420px] lg:w-[500px] text-base"
             />
             <span onClick={handleEmployeeSearch} className="absolute hover:cursor-pointer btn-sm right-1 top-2.5">
               <svg
@@ -141,10 +144,10 @@ function Navbar() {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
               <li>
-                <Link to="/user" className="justify-between">
+                <p className="justify-between">
                   Profile
                   <span className="badge">New</span>
-                </Link>
+                </p>
               </li>
               <li>
                 <Link

@@ -191,7 +191,6 @@ const EditEmployee = () => {
 
   if (updateEmployeeResponse.isSuccess) {
     window.location.reload();
-    console.log(updateEmployeeResponse.data?.data.payload.employeeObj);
   }
 
   return (

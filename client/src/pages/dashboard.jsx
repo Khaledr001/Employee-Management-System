@@ -31,6 +31,7 @@ export default function Dashboard() {
   }
 
   let totalAge = 0;
+  let totaSalary = 0;
 
   const calculateAge = (birthDate) => {
     const today = new Date();
@@ -50,18 +51,24 @@ export default function Dashboard() {
   if (getEmployeeResponse.isSuccess) {
     employees?.map((employee) => {
       calculateAge(employee.dateOfBirth);
+      totaSalary += employee.salary;
     });
   }
 
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-10 mt-3">
-        <MyCard title={"Total Employees"} number={employees?.length} />
-        <MyCard title={"Total Users"} number={users?.length} />
-        <MyCard
-          title={"Average Employee Age"}
-          number={totalAge / employees?.length}
-        />
+      <div className="flex flex-col md:flex-row gap-8 mt-3">
+        <div className="flex gap-8 flex-col lg:flex-row">
+          <MyCard title={"Total Employees"} number={employees?.length} />
+          <MyCard title={"Total Users"} number={users?.length} />
+        </div>
+        <div className="flex gap-8 flex-col lg:flex-row">
+          <MyCard title={"Total Employee Salary"} number={totaSalary} />
+          <MyCard
+            title={"Average Employee Age"}
+            number={totalAge / employees?.length}
+          />
+        </div>
       </div>
 
       <div className="mt-10 flex gap-10 flex-col lg:flex-row">

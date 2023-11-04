@@ -135,8 +135,8 @@ const AddProduct = () => {
   }
 
   if (employeeResponse.isSuccess) {
-    // window.location.reload();
-    window.alert("You product was successfully added");
+    window.location.reload();
+    // window.alert("You product was successfully added");
   }
 
   return (

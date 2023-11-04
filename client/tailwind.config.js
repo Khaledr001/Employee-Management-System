@@ -30,7 +30,7 @@ export default {
     themes: [
       {
         mydark: {
-          "primary": "#4b5563",
+          "primary": "#A7A7A7",
           "secondary": "#ef9ec6",
           "accent": "#5e99c9",
           "neutral": "#1f1e24",
@@ -43,13 +43,13 @@ export default {
       },
       {
         mylight: {
-          "primary": "#1dd64c",
+          "primary": "#505050",
           "secondary": "#bbeef7",
           "accent": "#84c8ed",
           "neutral": "#352938",
           "base-100": "#f4f5fa",
           "info": "#2488e5",
-          "success": "#1e8071",
+          "success": "#32BE5D",
           "warning": "#f0a433",
           "error": "#ec4b4e",
 

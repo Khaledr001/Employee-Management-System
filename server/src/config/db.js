@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { mongoDbLoacalUrl } from "../secret.js";
+import { mongoDbAtlasUrl } from "../secret.js";
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(mongoDbLoacalUrl);
+        await mongoose.connect(mongoDbAtlasUrl);
         console.log("Connect to MongoDB");
         mongoose.connection.on('error', err => console.log("Db connection error: " + err));
     }

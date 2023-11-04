@@ -134,7 +134,7 @@ const AllEmployees = () => {
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold  md:ms-5 lg:ms-5">
             All employees
           </h1>
-          <h1 className="text-xl md:text-2xl text-success font-extrabold md:me-5 lg:me-5">
+          <h1 className="text-xl md:text-2xl text-success font-bold md:me-5 lg:me-5">
             Total employees : {employees?.length}
           </h1>
         </div>
@@ -175,14 +175,12 @@ const AllEmployees = () => {
                   value={dropdown}
                   onChange={handleDropdownChange}>
                   <option selected value="">
-                    All Employee
+                    All Department
                   </option>
                   <option value="manager">Manager</option>
-                  <option value="data analyst">Data Analyst</option>
-                  <option value="froentend developer">
-                    Froentend Developer
-                  </option>
-                  <option value="backend developer">Backend Developer</option>
+                  <option value="developtment">Developtment</option>
+                  <option value="analytics">Analytics</option>
+                  <option value="engineering">Engineering</option>
                 </select>
               </div>
 

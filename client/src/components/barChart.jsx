@@ -1,47 +1,34 @@
 /* eslint-disable react/prop-types */
-import { axisClasses } from "@mui/x-charts";
-import { BarChart } from "@mui/x-charts/BarChart";
+import { Bar, BarChart, CartesianGrid, Legend, Rectangle, Tooltip, XAxis, YAxis } from "recharts";
 
-const chartSetting = {
-  yAxis: [
-    {
-      //   label: "rainfall (mm)",
-    },
-  ],
-  width: 600,
-  height: 400,
-  sx: {
-    [`.${axisClasses.left} .${axisClasses.label}`]: {
-      transform: "translate(-20px, 0)",
-    },
-  },
-};
 
-const Barchart = ({ employees }) => {
+export default function AppBar({employees}) {
   return (
-    <div className="bg-white rounded-md w-fit ps-5">
-      <BarChart
-        dataset={employees}
-        xAxis={[
-          {
-            scaleType: "band",
-            dataKey: "email",
-            valueFormatter: (v) => {
-              v.toString();
-              const first = v.split("@");
-              return first[0];
-            },
-          },
-        ]}
-        series={[
-          { dataKey: "salary", label: "Salary" },
-
-          // { dataKey: "seoul", label: "Seoul", valueFormatter },
-        ]}
-        {...chartSetting}
-      />
-    </div>
+    <BarChart
+      width={500}
+      height={300}
+      data={employees}
+      margin={{
+        top: 5,
+        right: 30,
+        left: 20,
+        bottom: 5,
+      }}>
+      <CartesianGrid strokeDasharray="0 100" />
+      <XAxis dataKey="firstName" stroke="gray"/>
+      <YAxis  stroke="gray"/>
+      <Tooltip />
+      <Legend />
+       <Bar
+            dataKey="salary"
+            fill="#8884d8"
+            activeBar={<Rectangle fill='pink' stroke='blue' />}
+          />
+          <Bar
+            dataKey='salary'
+            fill='#82ca9d'
+            activeBar={<Rectangle fill='gold' stroke='purple' />}
+          />
+    </BarChart>
   );
-};
-
-export default Barchart;
+}
